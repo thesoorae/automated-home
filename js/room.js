@@ -3,7 +3,7 @@ class Room{
     this.ctx = ctx;
     this.temp = (temp - 50)/5;
     this.light = 0;
-    this.curtainHeight = 0;
+    this.curtainHeight = 250 * (1/8);
     this.draw = this.draw.bind(this);
     this.updateTemp = this.updateTemp.bind(this);
     this.update = this.update.bind(this);

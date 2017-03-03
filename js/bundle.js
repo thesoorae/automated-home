@@ -78,7 +78,7 @@
 	    this.ctx = ctx;
 	    this.temp = (temp - 50)/5;
 	    this.light = 0;
-	    this.curtainHeight = 0;
+	    this.curtainHeight = 250 * (1/8);
 	    this.draw = this.draw.bind(this);
 	    this.updateTemp = this.updateTemp.bind(this);
 	    this.update = this.update.bind(this);
@@ -141,7 +141,7 @@
 	    this.ctx = ctx;
 	    this.light = 10;
 	    this.temp = 70;
-	    this.curtain = 10;
+	    this.curtain = 8;
 	    this.room = null;
 	    this.update = this.update.bind(this);
 	    this.updateLight = this.updateLight.bind(this);
@@ -186,8 +186,9 @@
 	    $( "#minval-light" ).text( this.light );
 	    $( "#minval-curtain" ).text( this.curtain );
 	
+	
 	    $( "#temp-slider" ).slider({
-	              orientation:"vertical",
+	              orientation:"horizontal",
 	              min: 50,
 	              max: 90,
 	              value:this.temp,
@@ -200,7 +201,7 @@
 	
 	
 	        $( "#light-slider" ).slider({
-	                  orientation:"vertical",
+	                  orientation:"horizontal",
 	                  min: 1,
 	                  max: 10,
 	                  value:this.light,
@@ -214,7 +215,7 @@
 	
 	
 	            $( "#curtain-slider" ).slider({
-	                      orientation:"vertical",
+	                      orientation:"horizontal",
 	                      min: 1,
 	                      max: 10,
 	                      value:this.curtain,
@@ -224,6 +225,8 @@
 	                      },
 	
 	                   });
+	
+	                   $('.logs').button();
 	                }
 	
 	  }

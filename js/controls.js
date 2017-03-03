@@ -4,7 +4,7 @@ class Controls{
     this.ctx = ctx;
     this.light = 10;
     this.temp = 70;
-    this.curtain = 10;
+    this.curtain = 8;
     this.room = null;
     this.update = this.update.bind(this);
     this.updateLight = this.updateLight.bind(this);
@@ -49,8 +49,9 @@ class Controls{
     $( "#minval-light" ).text( this.light );
     $( "#minval-curtain" ).text( this.curtain );
 
+
     $( "#temp-slider" ).slider({
-              orientation:"vertical",
+              orientation:"horizontal",
               min: 50,
               max: 90,
               value:this.temp,
@@ -63,7 +64,7 @@ class Controls{
 
 
         $( "#light-slider" ).slider({
-                  orientation:"vertical",
+                  orientation:"horizontal",
                   min: 1,
                   max: 10,
                   value:this.light,
@@ -77,7 +78,7 @@ class Controls{
 
 
             $( "#curtain-slider" ).slider({
-                      orientation:"vertical",
+                      orientation:"horizontal",
                       min: 1,
                       max: 10,
                       value:this.curtain,
@@ -87,6 +88,8 @@ class Controls{
                       },
 
                    });
+
+                   $('.logs').button();
                 }
 
   }
