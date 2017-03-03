@@ -4,39 +4,48 @@
     <meta charset="utf-8">
     <title>Adobe Home Sensors</title>
     <link href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' rel='stylesheet' type='text/css'>
+      <script src = "./example2/jquery-1.6.2.min.js"></script>
+      <script type="text/javascript" src="./example2/fire-0.62.min.js"></script>
 
-         <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+         <!-- <script src = "https://code.jquery.com/jquery-1.10.2.js"></script> -->
          <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
          <script src="./js/bundle.js"></script>
+
     <link rel="stylesheet" href="./assets/style.css">
 
   </head>
   <body>
     <div class="container">
-      <canvas id="canvas"></canvas>
+      <div class="frame">
+        <canvas id="canvas"></canvas>
+        <div class="fire"></div>
+      </div>
+
+
+
 
       <div class="controls">
-      <div class="temperature">
-        <input type = "text" id = "minval-temp"
-        style = "border:0; color:#b9cd6d; font-weight:bold;">
+        <div class="title">Adobe Home Controller</div>
+        <div class="sliders">
+      <div class="slider temperature">
+        <div class="slider-output"  id = "minval-temp"></div>
         <div id = "temp-slider"></div>
-        <label for = "minval-temp">Temperature</label>
+        <div  class="slider-label" for = "minval-temp">Temperature</div>
       </div>
 
-      <div class="lights">
-        <input type = "text" id = "minval-light"
-        style = "border:0; color:#b9cd6d; font-weight:bold;">
+      <div class="slider lights">
+        <div class="slider-output"  id = "minval-light"></div>
         <div id = "light-slider"></div>
-        <label for = "minval-light">Light Dimmer</label>
+        <div  class="slider-label" for = "minval-light">Light Dimmer</div>
       </div>
 
-      <div class="temperature">
-        <input type = "text" id = "minval-curtain"
-        style = "border:0; color:#b9cd6d; font-weight:bold;">
+      <div class="slider temperature">
+        <div class="slider-output"  id = "minval-curtain"></div>
         <div id = "curtain-slider"></div>
-        <label for = "minval-curtain">Curtains</label>
+        <div  class="slider-label" for = "minval-curtain">Curtains</div>
       </div>
     </div>
+  </div>
 
         <!-- <form class="control-form">
 

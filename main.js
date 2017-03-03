@@ -7,6 +7,7 @@ $(document).ready(function(){
   canvas.height = 600;
 
 
+
   if (canvas.getContext){
     const ctx = canvas.getContext('2d');
     // let w = $("#canvas").width();

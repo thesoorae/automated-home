@@ -4,22 +4,24 @@ class Controls{
     this.ctx = ctx;
     this.light = 10;
     this.temp = 70;
-    this.curtain = 2;
+    this.curtain = 10;
     this.room = null;
     this.update = this.update.bind(this);
     this.updateLight = this.updateLight.bind(this);
     this.updateCurtain = this.updateCurtain.bind(this);
+    this.updateTemp = this.updateTemp.bind(this);
+
 
   }
   start(){
     this.loadControls();
-    this.room = new Room(this.ctx, this.light, this.temp, this.curtain);
+    this.room = new Room(this.ctx, this.temp, this.light, this.curtain);
     this.room.draw();
   }
 
   update(){
     console.log("in here");
-    this.room.update(this.light, this.curtain);
+    this.room.update(this.temp, this.light, this.curtain);
     console.log(this.room);
   }
   updateLight(light){
@@ -32,50 +34,59 @@ class Controls{
     this.curtain = curtain;
     this.update();
   }
+  updateTemp(temp){
+    this.temp = temp;
+    this.update();
+  }
 
   loadControls(){
     const update = this.update;
     const updateLight = this.updateLight;
     const updateCurtain = this.updateCurtain;
+    const updateTemp = this.updateTemp;
+
+    $( "#minval-temp" ).text( this.temp );
+    $( "#minval-light" ).text( this.light );
+    $( "#minval-curtain" ).text( this.curtain );
+
     $( "#temp-slider" ).slider({
               orientation:"vertical",
               min: 50,
               max: 90,
               value:this.temp,
               slide: function( event, ui ) {
-                 $( "#minval-temp" ).val( ui.value );
+                 $( "#minval-temp" ).text( ui.value ),
+                 updateTemp(ui.value);
               }
            });
-           $( "#minval-temp" ).val( $( "#temp-slider" ).slider( "value" ) );
+          //  $( "#minval-temp" ).val( $( "#temp-slider" ).slider( "value" ) );
 
 
         $( "#light-slider" ).slider({
                   orientation:"vertical",
-                  min: 0,
+                  min: 1,
                   max: 10,
                   value:this.light,
                   slide: function( event, ui ) {
-                     $( "#minval-light" ).val( ui.value );
+                     $( "#minval-light" ).text( ui.value );
                      updateLight(ui.value);
 
                   },
 
                });
-               $( "#minval-light" ).val( $( "#light-slider" ).slider( "value" ) );
 
 
             $( "#curtain-slider" ).slider({
                       orientation:"vertical",
-                      min: 0,
+                      min: 1,
                       max: 10,
                       value:this.curtain,
                       slide: function( event, ui ) {
-                         $( "#minval-curtain" ).val( ui.value );
+                         $( "#minval-curtain" ).text( ui.value );
                          updateCurtain(ui.value);
                       },
 
                    });
-                   $( "#minval-curtain" ).val( $( "#curtain-slider" ).slider( "value" ) );
                 }
 
   }

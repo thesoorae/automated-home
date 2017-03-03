@@ -1,11 +1,22 @@
 class Room{
   constructor(ctx, temp, light, curtain){
     this.ctx = ctx;
-    this.temp = temp;
-    this.light = 1/light;
-    this.curtainHeight = 25 * curtain;
+    this.temp = (temp - 50)/5;
+    this.light = 0;
+    this.curtainHeight = 0;
     this.draw = this.draw.bind(this);
+    this.updateTemp = this.updateTemp.bind(this);
+    this.update = this.update.bind(this);
+    $('.fire').fire({
+    speed:50,
+    maxPow: this.temp,
+    gravity:0,
+    flameWidth:3,
+    flameHeight:0,
+    fadingFlameSpeed:8
+  });
   }
+
 
   draw(){
     let curtainHeight = this.curtainHeight;
@@ -25,14 +36,21 @@ class Room{
     };
     img.src = './assets/room.png';
 
-  }
-  update(light, curtain){
-
+    }
+  update(temp, light, curtain){
+    this.temp = (temp-50)/5;
     this.light = 1/light;
     if(light == 10) this.light = 0;
-    this.curtainHeight = 25 *curtain;
+    this.curtainHeight = 250 * (1/curtain);
+    if(curtain == 10) this.curtainHeight = 0;
     this.draw();
+    this.updateTemp();
   }
+  updateTemp(){
+    $('.fire').fire('change',{maxPow:this.temp});
+  }
+
+
 }
 
 module.exports = Room;
