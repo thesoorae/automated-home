@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Adobe Home Sensors</title>
+    <link href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' rel='stylesheet' type='text/css'>
+
+         <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+         <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+         <script src="./js/bundle.js"></script>
+    <link rel="stylesheet" href="./assets/style.css">
+
+  </head>
+  <body>
+    <div class="container">
+      <canvas id="canvas"></canvas>
+
+      <div class="controls">
+      <div class="temperature">
+        <input type = "text" id = "minval-temp"
+        style = "border:0; color:#b9cd6d; font-weight:bold;">
+        <div id = "temp-slider"></div>
+        <label for = "minval-temp">Temperature</label>
+      </div>
+
+      <div class="lights">
+        <input type = "text" id = "minval-light"
+        style = "border:0; color:#b9cd6d; font-weight:bold;">
+        <div id = "light-slider"></div>
+        <label for = "minval-light">Light Dimmer</label>
+      </div>
+
+      <div class="temperature">
+        <input type = "text" id = "minval-curtain"
+        style = "border:0; color:#b9cd6d; font-weight:bold;">
+        <div id = "curtain-slider"></div>
+        <label for = "minval-curtain">Curtains</label>
+      </div>
+    </div>
+
+        <!-- <form class="control-form">
+
+          <div class="slider">
+            <label>Temperature</label>
+            <input class="temp-slider" type="range" min="60" max"90" step="1" value="70">
+            <output for="temp">70</output>
+          </div>
+          <div class="slider">
+            <label>Light Dimmer</label>
+            <input class="light-slider" type="range" min="0" max"10" step="1" value="70">
+            <output for="light">5</output>
+          </div>
+          <div class="slider">
+            <label>Open and Close Curtains</label>
+            <input class="curtain-slider" type="range" min="0" max"3" step="1" value="70">
+            <output for="curtain">0</output>
+          </div>
+        </form> -->
+      </div>
+    </div>
+  </body>
+</html>
