@@ -11,18 +11,16 @@ $(document).ready(function(){
   const updateDB = function(id, data){
     console.log(data);
     $.ajax({
-      method: 'PUT',
+      type: 'PATCH',
       headers:{
         'Content-Type': 'application/json'
       },
-      dataType: 'json',
       url: root + '/rooms/'+ id,
-      data: data,
-      success: function(res){
-        console.log('successfully updated ' + res);
-      }
-    });
+      dataType: 'json',
+      data: JSON.stringify(data)
+    }).then(function(res){console.log('successfully updated' + res);});
   };
+
   if (canvas.getContext){
     const ctx = canvas.getContext('2d');
     $.ajax({

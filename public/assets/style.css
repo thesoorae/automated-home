@@ -1,8 +1,9 @@
+
 html, body, div, p, a, h1, h2, h3{
   border: 0;
   margin: 0;
   padding: 0;
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'Gill Sans', sans-serif;
   color: gray;
 }
 div.container{
@@ -46,6 +47,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f6f6', end
   text-transform: uppercase;
   width: 90%;
   margin: 15px auto;
+
 }
 
 .controls h2{

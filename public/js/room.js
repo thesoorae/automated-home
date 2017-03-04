@@ -4,7 +4,7 @@ class Room{
     this.ctx = ctx;
     this.temp = params.temp;
     this.light = 10/(params.light);
-    this.curtainHeight = params.curtains.max * (params.curtains.current_height/100);
+    this.curtainHeight = params.curtains.max * (params.curtain_height/100);
     this.draw = this.draw.bind(this);
     this.updateTemp = this.updateTemp.bind(this);
     this.update = this.update.bind(this);

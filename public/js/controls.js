@@ -7,7 +7,7 @@ class Controls{
     this.ctx = ctx;
     this.light = params.light;
     this.temp = params.temp;
-    this.curtain = params.curtains.current_height;
+    this.curtain = params.curtain_height;
     this.room = null;
     this.curtainPresent = params.curtains.present;
     this.roomDims = params.dims;
@@ -17,6 +17,7 @@ class Controls{
     this.updateTemp = this.updateTemp.bind(this);
     this.lightText = this.lightText.bind(this);
     this.updateDB = updateDB;
+    this.patchServer = this.patchServer.bind(this);
 
   }
   start(){
@@ -27,18 +28,22 @@ class Controls{
   }
 
   update(){
+    console.log(this.id);
     this.room.update(this.temp, this.light, this.curtain);
-    let data = {
-      'light': this.light,
-      'curtains':{'current_height': this.curtain},
-      'temp': this.temp
-    };
-    this.updateDB(this.id, data);
+
   }
   updateLight(light){
     this.light = light;
     console.log("updateLight", this.light);
     this.update();
+  }
+  patchServer(){
+    let data = {
+      "light": this.light,
+      "curtain_height": this.curtain,
+      "temp": this.temp
+    };
+    this.updateDB(this.id, data);
   }
 
   updateCurtain(curtain){
@@ -66,6 +71,7 @@ class Controls{
     const updateTemp = this.updateTemp;
     const name = this.name;
     const lightText = this.lightText;
+    const patchServer = this.patchServer;
 
     $( `#${name}-minval-temp` ).text( `${this.temp}°F` );
     $( `#${name}-minval-light` ).text( lightText(this.light) );
@@ -80,6 +86,9 @@ class Controls{
               slide: function( event, ui ) {
                  $( `#${name}-minval-temp` ).text( `${ui.value}°F` ),
                  updateTemp(ui.value);
+              },
+              change: function(){
+                patchServer();
               }
            });
           //  $( "#minval-temp" ).val( $( "#temp-slider" ).slider( "value" ) );
@@ -96,7 +105,9 @@ class Controls{
                      updateLight(ui.value);
 
                   },
-
+                  change: function(){
+                    patchServer();
+                  }
                });
 
             if(this.curtainPresent){
@@ -110,7 +121,9 @@ class Controls{
                            $( `#${name}-minval-curtain` ).text( `${ui.value}%` );
                            updateCurtain(ui.value);
                         },
-
+                        change: function(){
+                          patchServer();
+                        }
                      });
             } else{
               console.log(`.${name} > div.curtains`);
