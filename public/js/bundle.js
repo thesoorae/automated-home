@@ -381,7 +381,7 @@ var House = __webpack_require__(0);
 // let root = "http://localhost:3000";
 // let root = "https://github.com/thesoorae/automated-home";
 // let root = process.env.PORT || 3000;
-var root = "https://automated-home.herokuapp.com/";
+var root = "https://automated-home.herokuapp.com";
 //get canvas
 $(document).ready(function () {
   var canvas = $("#canvas")[0];
