@@ -12,7 +12,7 @@ $(document).ready(function(){
   canvas.width = x;
   canvas.height = y;
   const updateDB = function(id, data){
-    console.log(data);
+    console.log(root);
     $.ajax({
       type: 'PATCH',
       headers:{
