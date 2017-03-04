@@ -44,13 +44,16 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	const Controls = __webpack_require__(1);
+	const House = __webpack_require__(3);
 	
 	//get canvas
 	$(document).ready(function(){
-	  const canvas = $("#living-canvas")[0];
-	  canvas.width = 600;
-	  canvas.height = 600;
+	  const canvas = $("#canvas")[0];
+	  const x = window.innerWidth || document.documentElement.clientWidth;
+	  const y = window.innerHeight || document.documentElement.clientHeight;
+	  canvas.width = x;
+	  canvas.height = y;
+	  console.log(x, y);
 	
 	
 	
@@ -58,8 +61,10 @@
 	    const ctx = canvas.getContext('2d');
 	    // let w = $("#canvas").width();
 	    // let h = $("#canvas").height();
-	    let controls = new Controls('living',ctx);
-	    controls.start();
+	    // let livingControls = new Controls('living',ctx, x, y);
+	    // let kitchenControls = new Controls('')
+	    let house = new House(ctx);
+	    house.start();
 	
 	
 	
@@ -75,13 +80,16 @@
 
 	const Room = __webpack_require__(2);
 	class Controls{
-	  constructor(name, ctx){
+	  constructor(name, ctx, curtainDims, roomDims){
 	    this.name = name;
 	    this.ctx = ctx;
 	    this.light = 10;
 	    this.temp = 70;
 	    this.curtain = 8;
 	    this.room = null;
+	    this.curtainDims = curtainDims;
+	    this.curtainPresent = curtainDims.present;
+	    this.roomDims = roomDims;
 	    this.update = this.update.bind(this);
 	    this.updateLight = this.updateLight.bind(this);
 	    this.updateCurtain = this.updateCurtain.bind(this);
@@ -91,7 +99,8 @@
 	  }
 	  start(){
 	    this.loadControls();
-	    this.room = new Room(this.name, this.ctx, this.temp, this.light, this.curtain);
+	
+	    this.room = new Room(this.name, this.ctx, this.temp, this.light, this.curtain, this.curtainDims, this.roomDims);
 	    this.room.draw();
 	  }
 	
@@ -153,18 +162,21 @@
 	
 	               });
 	
+	            if(this.curtainPresent){
+	              $( `#${name}-curtain-slider` ).slider({
+	                        orientation:"horizontal",
+	                        min: 1,
+	                        max: 10,
+	                        value:this.curtain,
+	                        slide: function( event, ui ) {
+	                           $( `#${name}-minval-curtain` ).text( ui.value );
+	                           updateCurtain(ui.value);
+	                        },
 	
-	            $( `#${name}-curtain-slider` ).slider({
-	                      orientation:"horizontal",
-	                      min: 1,
-	                      max: 10,
-	                      value:this.curtain,
-	                      slide: function( event, ui ) {
-	                         $( `#${name}-minval-curtain` ).text( ui.value );
-	                         updateCurtain(ui.value);
-	                      },
-	
-	                   });
+	                     });
+	            } else{
+	              console.log("no curtain");
+	            }
 	
 	
 	                }
@@ -179,15 +191,26 @@
 /***/ function(module, exports) {
 
 	class Room{
-	  constructor(name, ctx, temp, light, curtain){
+	  constructor(name, ctx, temp, light, curtain, curtainDims, roomDims){
 	    this.name = name;
 	    this.ctx = ctx;
-	    this.temp = (temp - 50)/5;
+	    this.temp = (temp - 60)/5;
 	    this.light = 0;
-	    this.curtainHeight = 250 * (1/8);
+	    this.curtainHeight = curtainDims.max * (1/curtain);
 	    this.draw = this.draw.bind(this);
 	    this.updateTemp = this.updateTemp.bind(this);
 	    this.update = this.update.bind(this);
+	
+	    this.curtainX = curtainDims.x;
+	    this.curtainY = curtainDims.y;
+	    this.curtainW = curtainDims.w;
+	    this.curtainMaxHeight = curtainDims.max;
+	
+	    this.roomX = roomDims.x;
+	    this.roomY = roomDims.y;
+	    this.roomW = roomDims.w;
+	    this.roomH = roomDims.h;
+	    if(name == "living"){
 	    $('.fire').fire({
 	    speed:50,
 	    maxPow: this.temp,
@@ -197,6 +220,7 @@
 	    fadingFlameSpeed:8
 	  });
 	  }
+	}
 	
 	
 	  draw(){
@@ -204,37 +228,102 @@
 	    let brightness = this.light;
 	    console.log(curtainHeight);
 	    const ctx = this.ctx;
-	    let img = new Image();
-	    img.onload = function(){
-	      ctx.drawImage(img, 0,0);
+	    // let img = new Image();
+	    // img.onload = function(){
+	      // ctx.drawImage(img, 0,0);
+	      ctx.clearRect(this.roomX, this.roomY, this.roomW, this.roomH);
+	
 	      ctx.fillStyle = "rgba(219,112,147, 0.7)";
-	      ctx.fillRect(420, 45, 132, curtainHeight);
+	      ctx.fillRect(this.curtainX, this.curtainY, this.curtainW, curtainHeight);
 	
 	      ctx.fillStyle = `rgba(0, 0, 0, ${brightness})`;
-	      ctx.fillRect(0, 0, 600, 600);
+	      ctx.fillRect(this.roomX, this.roomY, this.roomW, this.roomH);
 	
 	
-	    };
-	    img.src = `./assets/${this.name}.png`;
+	    // };
+	    // img.src = `./assets/${this.name}.png`;
 	
 	    }
 	  update(temp, light, curtain){
-	    this.temp = (temp-50)/5;
+	    this.temp = (temp-60)/5;
 	    this.light = 1/light;
 	    if(light == 10) this.light = 0;
-	    this.curtainHeight = 250 * (1/curtain);
-	    if(curtain == 10) this.curtainHeight = 0;
+	    this.curtainHeight = this.curtainMaxHeight * (1/curtain);
 	    this.draw();
 	    this.updateTemp();
 	  }
 	  updateTemp(){
-	    $('.fire').fire('change',{maxPow:this.temp});
+	    if(this.name == "living"){
+	      $('.fire').fire('change',{maxPow:this.temp});
+	    }
 	  }
 	
 	
 	}
 	
 	module.exports = Room;
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	const Controls = __webpack_require__(1);
+	
+	class House{
+	  constructor(ctx){
+	    this.ctx = ctx;
+	    this.livingCurtainDims = {
+	          present: true,
+	          x: 110,
+	          y: 475,
+	          w: 105,
+	          max: 100
+	        };
+	    this.livingRoomDims = {
+	          x: 85,
+	          y: 435,
+	          w: 378,
+	          h: 300
+	        };
+	    this.bedCurtainDims = {
+	      present: true,
+	      x: 215,
+	      y: 225,
+	      w: 110,
+	      max: 70
+	    };
+	    this.bedRoomDims = {
+	          x: 85,
+	          y: 213,
+	          w: 378,
+	          h: 205
+	        };
+	    this.kitCurtainDims = {
+	      present: true,
+	      x: 507,
+	      y: 458,
+	      w: 105,
+	      max: 105
+	    }
+	    this.kitRoomDims = {
+	      x: 485,
+	      y: 435,
+	      w: 305,
+	      h: 300
+	        };
+	  }
+	  start(){
+	    let livingControls = new Controls('living',this.ctx, this.livingCurtainDims, this.livingRoomDims);
+	    livingControls.start();
+	    let bedControls = new Controls('bedroom',this.ctx, this.bedCurtainDims, this.bedRoomDims);
+	    bedControls.start();
+	    let kitControls = new Controls('kitchen',this.ctx, this.kitCurtainDims, this.kitRoomDims);
+	    kitControls.start();
+	  }
+	}
+	
+	module.exports = House;
 
 
 /***/ }

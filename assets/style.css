@@ -5,19 +5,31 @@ html, body, div, p, a, h1, h2, h3{
   font-family: sans-serif;
 }
 div.container{
-  display: flex;
+  /*display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-around;*/
+  background-image: url("./house.png");
+  background-repeat: no-repeat;
+background-attachment: fixed;
+background-position: left center;
+background-size: 1000px 800px;
+
+width: 100vw;
+height: 100vh;
+
+overflow: hidden;
+
 }
 
 div.controls{
-
-  height: 80%;
-  width:30%;
+position: absolute;
+top: 0;
+right: 0;
+  width:20%;
   /*max-width: 270px;*/
-  padding: 70px 40px 10px 40px;
+  padding: 10px 40px;
   border-radius: 20px;
-  margin: 50px auto;
+  /*margin: 50px auto;*/
 
 
 
@@ -33,13 +45,13 @@ div.controls{
 }
 .title{
   text-align: center;
-  font-size: 25px;
+  font-size: 15px;
 
 }
 div.room{
   margin: 10px;
   background-color: #FFFAF0;
-  padding: 15px;
+  padding: 5px;
   border-radius: 10px;
   -webkit-box-shadow: inset 9px 11px 72px 9px rgba(245,230,184,0.43);
   -moz-box-shadow: inset 9px 11px 72px 9px rgba(245,230,184,0.43);
@@ -52,30 +64,34 @@ div.sliders{
   margin: 15px 0px;
 }
 .slider-label {
-min-width: 100px;
+min-width: 80px;
+font-size: 12px;
 }
 .slider-output{
   margin: 0 auto;
-  font-size: 20px;
+  font-size: 12px;
 
 }
 
 .frame{
-  width: 600;
-  height: 600;
+  width: 100%;
+  height: 100vh;
   position: relative;
-  margin: auto;
+  /*margin: auto;*/
 }
 .canvas{
   position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 100;
 
 }
 .fire{
   position: absolute;
-  bottom: 125px;
-  right: 77px;
-  width:78px;
-  height:80px;
+  bottom: 40px;
+  left: 114px;
+  width:45px;
+  height:45px;
   z-index: 200;
   float:left;
 }
@@ -95,10 +111,18 @@ min-width: 100px;
 }
 
 .controls h2{
-  font-size: 20px;
+  font-size: 16px;
 }
 div.room-images{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+img.house{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 800px;
+  z-index: 1;
 }

@@ -1,12 +1,15 @@
 const Room = require('./room');
 class Controls{
-  constructor(name, ctx){
+  constructor(name, ctx, curtainDims, roomDims){
     this.name = name;
     this.ctx = ctx;
     this.light = 10;
     this.temp = 70;
     this.curtain = 8;
     this.room = null;
+    this.curtainDims = curtainDims;
+    this.curtainPresent = curtainDims.present;
+    this.roomDims = roomDims;
     this.update = this.update.bind(this);
     this.updateLight = this.updateLight.bind(this);
     this.updateCurtain = this.updateCurtain.bind(this);
@@ -16,7 +19,8 @@ class Controls{
   }
   start(){
     this.loadControls();
-    this.room = new Room(this.name, this.ctx, this.temp, this.light, this.curtain);
+
+    this.room = new Room(this.name, this.ctx, this.temp, this.light, this.curtain, this.curtainDims, this.roomDims);
     this.room.draw();
   }
 
@@ -78,18 +82,21 @@ class Controls{
 
                });
 
+            if(this.curtainPresent){
+              $( `#${name}-curtain-slider` ).slider({
+                        orientation:"horizontal",
+                        min: 1,
+                        max: 10,
+                        value:this.curtain,
+                        slide: function( event, ui ) {
+                           $( `#${name}-minval-curtain` ).text( ui.value );
+                           updateCurtain(ui.value);
+                        },
 
-            $( `#${name}-curtain-slider` ).slider({
-                      orientation:"horizontal",
-                      min: 1,
-                      max: 10,
-                      value:this.curtain,
-                      slide: function( event, ui ) {
-                         $( `#${name}-minval-curtain` ).text( ui.value );
-                         updateCurtain(ui.value);
-                      },
-
-                   });
+                     });
+            } else{
+              console.log("no curtain");
+            }
 
 
                 }
