@@ -83,9 +83,9 @@
 	  constructor(name, ctx, curtainDims, roomDims){
 	    this.name = name;
 	    this.ctx = ctx;
-	    this.light = 10;
+	    this.light = 90;
 	    this.temp = 70;
-	    this.curtain = 8;
+	    this.curtain = 20;
 	    this.room = null;
 	    this.curtainDims = curtainDims;
 	    this.curtainPresent = curtainDims.present;
@@ -94,6 +94,7 @@
 	    this.updateLight = this.updateLight.bind(this);
 	    this.updateCurtain = this.updateCurtain.bind(this);
 	    this.updateTemp = this.updateTemp.bind(this);
+	    this.lightText = this.lightText.bind(this);
 	
 	
 	  }
@@ -123,6 +124,15 @@
 	    this.temp = temp;
 	    this.update();
 	  }
+	  lightText(val){
+	    if(val == 100 ){
+	      return "MAX";
+	    } else if(val <= 10){
+	      return "OFF";
+	    } else {
+	      return val + '%';
+	    }
+	  }
 	
 	  loadControls(){
 	    const update = this.update;
@@ -130,10 +140,11 @@
 	    const updateCurtain = this.updateCurtain;
 	    const updateTemp = this.updateTemp;
 	    const name = this.name;
+	    const lightText = this.lightText;
 	
-	    $( `#${name}-minval-temp` ).text( this.temp );
-	    $( `#${name}-minval-light` ).text( this.light );
-	    $( `#${name}-minval-curtain` ).text( this.curtain );
+	    $( `#${name}-minval-temp` ).text( `${this.temp}°F` );
+	    $( `#${name}-minval-light` ).text( lightText(this.light) );
+	    $( `#${name}-minval-curtain` ).text( `${this.curtain}%` );
 	
 	
 	    $( `#${name}-temp-slider` ).slider({
@@ -142,7 +153,7 @@
 	              max: 90,
 	              value:this.temp,
 	              slide: function( event, ui ) {
-	                 $( `#${name}-minval-temp` ).text( ui.value ),
+	                 $( `#${name}-minval-temp` ).text( `${ui.value}°F` ),
 	                 updateTemp(ui.value);
 	              }
 	           });
@@ -151,11 +162,12 @@
 	
 	        $( `#${name}-light-slider` ).slider({
 	                  orientation:"horizontal",
-	                  min: 1,
-	                  max: 10,
+	                  min: 10,
+	                  max: 100,
+	                  step: 10,
 	                  value:this.light,
 	                  slide: function( event, ui ) {
-	                     $( `#${name}-minval-light` ).text( ui.value );
+	                     $( `#${name}-minval-light` ).text( lightText(ui.value) );
 	                     updateLight(ui.value);
 	
 	                  },
@@ -165,17 +177,19 @@
 	            if(this.curtainPresent){
 	              $( `#${name}-curtain-slider` ).slider({
 	                        orientation:"horizontal",
-	                        min: 1,
-	                        max: 10,
+	                        min: 10,
+	                        step: 10,
+	                        max: 100,
 	                        value:this.curtain,
 	                        slide: function( event, ui ) {
-	                           $( `#${name}-minval-curtain` ).text( ui.value );
+	                           $( `#${name}-minval-curtain` ).text( `${ui.value}%` );
 	                           updateCurtain(ui.value);
 	                        },
 	
 	                     });
 	            } else{
-	              console.log("no curtain");
+	              console.log(`.${name} > div.curtains`);
+	              $(`.${name} .curtains`).hide();
 	            }
 	
 	
@@ -194,9 +208,9 @@
 	  constructor(name, ctx, temp, light, curtain, curtainDims, roomDims){
 	    this.name = name;
 	    this.ctx = ctx;
-	    this.temp = (temp - 60)/5;
-	    this.light = 0;
-	    this.curtainHeight = curtainDims.max * (1/curtain);
+	    this.temp = temp;
+	    this.light = 10/light;
+	    this.curtainHeight = curtainDims.max * (curtain/100);
 	    this.draw = this.draw.bind(this);
 	    this.updateTemp = this.updateTemp.bind(this);
 	    this.update = this.update.bind(this);
@@ -205,6 +219,7 @@
 	    this.curtainY = curtainDims.y;
 	    this.curtainW = curtainDims.w;
 	    this.curtainMaxHeight = curtainDims.max;
+	    this.curtainColor = curtainDims.col;
 	
 	    this.roomX = roomDims.x;
 	    this.roomY = roomDims.y;
@@ -213,7 +228,7 @@
 	    if(name == "living"){
 	    $('.fire').fire({
 	    speed:50,
-	    maxPow: this.temp,
+	    maxPow: (this.temp-60)/5,
 	    gravity:0,
 	    flameWidth:3,
 	    flameHeight:0,
@@ -233,29 +248,33 @@
 	      // ctx.drawImage(img, 0,0);
 	      ctx.clearRect(this.roomX, this.roomY, this.roomW, this.roomH);
 	
-	      ctx.fillStyle = "rgba(219,112,147, 0.7)";
+	      ctx.fillStyle = this.curtainColor;
 	      ctx.fillRect(this.curtainX, this.curtainY, this.curtainW, curtainHeight);
 	
 	      ctx.fillStyle = `rgba(0, 0, 0, ${brightness})`;
 	      ctx.fillRect(this.roomX, this.roomY, this.roomW, this.roomH);
 	
+	      ctx.fillStyle = 'white';
+	      ctx.font = "25px Arial";
+	      ctx.fillText(`${this.temp}°F`,this.roomX + this.roomW - 90,this.roomY + 40);
 	
 	    // };
 	    // img.src = `./assets/${this.name}.png`;
 	
 	    }
 	  update(temp, light, curtain){
-	    this.temp = (temp-60)/5;
-	    this.light = 1/light;
-	    if(light == 10) this.light = 0;
-	    this.curtainHeight = this.curtainMaxHeight * (1/curtain);
+	    this.temp = temp;
+	    this.light = 10/light;
+	    if(light == 100) this.light = 0;
+	    this.curtainHeight = this.curtainMaxHeight * (curtain/100);
 	    this.draw();
 	    this.updateTemp();
 	  }
 	  updateTemp(){
 	    if(this.name == "living"){
-	      $('.fire').fire('change',{maxPow:this.temp});
+	      $('.fire').fire('change',{maxPow:(this.temp-60)/5});
 	    }
+	
 	  }
 	
 	
@@ -275,10 +294,11 @@
 	    this.ctx = ctx;
 	    this.livingCurtainDims = {
 	          present: true,
+	          col: "rgba(219,112,147, 0.7)",
 	          x: 110,
 	          y: 475,
-	          w: 105,
-	          max: 100
+	          w: 103,
+	          max: 90
 	        };
 	    this.livingRoomDims = {
 	          x: 85,
@@ -288,10 +308,11 @@
 	        };
 	    this.bedCurtainDims = {
 	      present: true,
+	      col: "rgba(225,187,66, 0.8)",
 	      x: 215,
 	      y: 225,
 	      w: 110,
-	      max: 70
+	      max: 60
 	    };
 	    this.bedRoomDims = {
 	          x: 85,
@@ -301,16 +322,31 @@
 	        };
 	    this.kitCurtainDims = {
 	      present: true,
+	      col: "rgba(36,122,156, 0.7)",
 	      x: 507,
 	      y: 458,
 	      w: 105,
 	      max: 105
-	    }
+	    };
 	    this.kitRoomDims = {
 	      x: 485,
 	      y: 435,
 	      w: 305,
 	      h: 300
+	        };
+	    this.bathCurtainDims = {
+	      present: false,
+	      col: "",
+	      x: 0,
+	      y: 0,
+	      w: 0,
+	      max: 0
+	    };
+	    this.bathRoomDims = {
+	          x: 485,
+	          y: 213,
+	          w: 305,
+	          h: 205
 	        };
 	  }
 	  start(){
@@ -320,6 +356,8 @@
 	    bedControls.start();
 	    let kitControls = new Controls('kitchen',this.ctx, this.kitCurtainDims, this.kitRoomDims);
 	    kitControls.start();
+	    let bathControls = new Controls('bath',this.ctx, this.bathCurtainDims, this.bathRoomDims);
+	    bathControls.start();
 	  }
 	}
 	

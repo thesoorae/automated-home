@@ -3,9 +3,9 @@ class Controls{
   constructor(name, ctx, curtainDims, roomDims){
     this.name = name;
     this.ctx = ctx;
-    this.light = 10;
+    this.light = 90;
     this.temp = 70;
-    this.curtain = 8;
+    this.curtain = 20;
     this.room = null;
     this.curtainDims = curtainDims;
     this.curtainPresent = curtainDims.present;
@@ -14,6 +14,7 @@ class Controls{
     this.updateLight = this.updateLight.bind(this);
     this.updateCurtain = this.updateCurtain.bind(this);
     this.updateTemp = this.updateTemp.bind(this);
+    this.lightText = this.lightText.bind(this);
 
 
   }
@@ -43,6 +44,15 @@ class Controls{
     this.temp = temp;
     this.update();
   }
+  lightText(val){
+    if(val == 100 ){
+      return "MAX";
+    } else if(val <= 10){
+      return "OFF";
+    } else {
+      return val + '%';
+    }
+  }
 
   loadControls(){
     const update = this.update;
@@ -50,10 +60,11 @@ class Controls{
     const updateCurtain = this.updateCurtain;
     const updateTemp = this.updateTemp;
     const name = this.name;
+    const lightText = this.lightText;
 
-    $( `#${name}-minval-temp` ).text( this.temp );
-    $( `#${name}-minval-light` ).text( this.light );
-    $( `#${name}-minval-curtain` ).text( this.curtain );
+    $( `#${name}-minval-temp` ).text( `${this.temp}°F` );
+    $( `#${name}-minval-light` ).text( lightText(this.light) );
+    $( `#${name}-minval-curtain` ).text( `${this.curtain}%` );
 
 
     $( `#${name}-temp-slider` ).slider({
@@ -62,7 +73,7 @@ class Controls{
               max: 90,
               value:this.temp,
               slide: function( event, ui ) {
-                 $( `#${name}-minval-temp` ).text( ui.value ),
+                 $( `#${name}-minval-temp` ).text( `${ui.value}°F` ),
                  updateTemp(ui.value);
               }
            });
@@ -71,11 +82,12 @@ class Controls{
 
         $( `#${name}-light-slider` ).slider({
                   orientation:"horizontal",
-                  min: 1,
-                  max: 10,
+                  min: 10,
+                  max: 100,
+                  step: 10,
                   value:this.light,
                   slide: function( event, ui ) {
-                     $( `#${name}-minval-light` ).text( ui.value );
+                     $( `#${name}-minval-light` ).text( lightText(ui.value) );
                      updateLight(ui.value);
 
                   },
@@ -85,17 +97,19 @@ class Controls{
             if(this.curtainPresent){
               $( `#${name}-curtain-slider` ).slider({
                         orientation:"horizontal",
-                        min: 1,
-                        max: 10,
+                        min: 10,
+                        step: 10,
+                        max: 100,
                         value:this.curtain,
                         slide: function( event, ui ) {
-                           $( `#${name}-minval-curtain` ).text( ui.value );
+                           $( `#${name}-minval-curtain` ).text( `${ui.value}%` );
                            updateCurtain(ui.value);
                         },
 
                      });
             } else{
-              console.log("no curtain");
+              console.log(`.${name} > div.curtains`);
+              $(`.${name} .curtains`).hide();
             }
 
 

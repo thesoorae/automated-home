@@ -5,10 +5,11 @@ class House{
     this.ctx = ctx;
     this.livingCurtainDims = {
           present: true,
+          col: "rgba(219,112,147, 0.7)",
           x: 110,
           y: 475,
-          w: 105,
-          max: 100
+          w: 103,
+          max: 90
         };
     this.livingRoomDims = {
           x: 85,
@@ -18,10 +19,11 @@ class House{
         };
     this.bedCurtainDims = {
       present: true,
+      col: "rgba(225,187,66, 0.8)",
       x: 215,
       y: 225,
       w: 110,
-      max: 70
+      max: 60
     };
     this.bedRoomDims = {
           x: 85,
@@ -31,16 +33,31 @@ class House{
         };
     this.kitCurtainDims = {
       present: true,
+      col: "rgba(36,122,156, 0.7)",
       x: 507,
       y: 458,
       w: 105,
       max: 105
-    }
+    };
     this.kitRoomDims = {
       x: 485,
       y: 435,
       w: 305,
       h: 300
+        };
+    this.bathCurtainDims = {
+      present: false,
+      col: "",
+      x: 0,
+      y: 0,
+      w: 0,
+      max: 0
+    };
+    this.bathRoomDims = {
+          x: 485,
+          y: 213,
+          w: 305,
+          h: 205
         };
   }
   start(){
@@ -50,6 +67,8 @@ class House{
     bedControls.start();
     let kitControls = new Controls('kitchen',this.ctx, this.kitCurtainDims, this.kitRoomDims);
     kitControls.start();
+    let bathControls = new Controls('bath',this.ctx, this.bathCurtainDims, this.bathRoomDims);
+    bathControls.start();
   }
 }
 
