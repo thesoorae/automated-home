@@ -90,20 +90,12 @@ var House = function () {
     key: 'start',
     value: function start() {
       var data = this.data;
+      // Iterate through data and create Control objects for each room in database 
       for (var i = 0; i < data.length; i++) {
         var roomParams = data[i];
         var newRoom = new Controls(this.ctx, roomParams, this.updateDB);
         newRoom.start();
       }
-      // console.log(this.data);
-      // let livingControls = new Controls('living',this.ctx, this.livingCurtainDims, this.livingRoomDims);
-      // livingControls.start();
-      // let bedControls = new Controls('bedroom',this.ctx, this.bedCurtainDims, this.bedRoomDims);
-      // bedControls.start();
-      // let kitControls = new Controls('kitchen',this.ctx, this.kitCurtainDims, this.kitRoomDims);
-      // kitControls.start();
-      // let bathControls = new Controls('bath',this.ctx, this.bathCurtainDims, this.bathRoomDims);
-      // bathControls.start();
     }
   }]);
 
@@ -148,36 +140,31 @@ var Controls = function () {
     this.patchServer = this.patchServer.bind(this);
   }
 
+  // create control inputs and room animation canvas for each room
+
   _createClass(Controls, [{
     key: "start",
     value: function start() {
       this.loadControls();
-
       this.room = new Room(this.ctx, this.roomParams);
       this.room.draw();
     }
+
+    // update animation to reflect slider input
+
   }, {
     key: "update",
     value: function update() {
-      console.log(this.id);
       this.room.update(this.temp, this.light, this.curtain);
     }
+
+    //Update each animation according to what slider is being changed
+
   }, {
     key: "updateLight",
     value: function updateLight(light) {
       this.light = light;
-      console.log("updateLight", this.light);
       this.update();
-    }
-  }, {
-    key: "patchServer",
-    value: function patchServer() {
-      var data = {
-        "light": this.light,
-        "curtain_height": this.curtain,
-        "temp": this.temp
-      };
-      this.updateDB(this.id, data);
     }
   }, {
     key: "updateCurtain",
@@ -202,6 +189,22 @@ var Controls = function () {
         return val + '%';
       }
     }
+
+    //Function that creates data and passes it into AJAX PATCH request at Main object level.
+
+  }, {
+    key: "patchServer",
+    value: function patchServer() {
+      var data = {
+        "light": this.light,
+        "curtain_height": this.curtain,
+        "temp": this.temp
+      };
+      this.updateDB(this.id, data);
+    }
+
+    // Create slider effects and event handlers for onslide and onchange.
+
   }, {
     key: "loadControls",
     value: function loadControls() {
@@ -213,9 +216,13 @@ var Controls = function () {
       var lightText = this.lightText;
       var patchServer = this.patchServer;
 
+      // Set text for initial load
+
       $("#" + name + "-minval-temp").text(this.temp + "\xB0F");
       $("#" + name + "-minval-light").text(lightText(this.light));
       $("#" + name + "-minval-curtain").text(this.curtain + "%");
+
+      // Temperature slider
 
       $("#" + name + "-temp-slider").slider({
         orientation: "horizontal",
@@ -229,9 +236,8 @@ var Controls = function () {
           patchServer();
         }
       });
-      //  $( "#minval-temp" ).val( $( "#temp-slider" ).slider( "value" ) );
 
-
+      // Light Slider
       $("#" + name + "-light-slider").slider({
         orientation: "horizontal",
         min: 10,
@@ -247,6 +253,7 @@ var Controls = function () {
         }
       });
 
+      // Curtain slider
       if (this.curtainPresent) {
         $("#" + name + "-curtain-slider").slider({
           orientation: "horizontal",
@@ -308,6 +315,9 @@ var Room = function () {
     this.roomY = params.dims.y;
     this.roomW = params.dims.w;
     this.roomH = params.dims.h;
+
+    // Start fire javascript animation in living room
+
     if (params.name == "living") {
       $('.fire').fire({
         speed: 50,
@@ -325,26 +335,25 @@ var Room = function () {
     value: function draw() {
       var curtainHeight = this.curtainHeight;
       var brightness = this.light;
-      console.log(curtainHeight);
       var ctx = this.ctx;
-      // let img = new Image();
-      // img.onload = function(){
-      // ctx.drawImage(img, 0,0);
+
+      // Clear canvas from previous draw
       ctx.clearRect(this.roomX, this.roomY, this.roomW, this.roomH);
-
       ctx.fillStyle = this.curtainColor;
+
+      // Draw new curtain height
       ctx.fillRect(this.curtainX, this.curtainY, this.curtainW, curtainHeight);
-
       ctx.fillStyle = 'rgba(0, 0, 0, ' + brightness + ')';
-      ctx.fillRect(this.roomX, this.roomY, this.roomW, this.roomH);
 
+      // Draw light filter
+      ctx.fillRect(this.roomX, this.roomY, this.roomW, this.roomH);
       ctx.fillStyle = 'white';
+      // Update temperature
       ctx.font = "25px Arial";
       ctx.fillText(this.temp + '\xB0F', this.roomX + this.roomW - 90, this.roomY + 40);
-
-      // };
-      // img.src = `./assets/${this.name}.png`;
     }
+    // Update instance variables and redraw.
+
   }, {
     key: 'update',
     value: function update(temp, light, curtain) {
@@ -355,6 +364,8 @@ var Room = function () {
       this.draw();
       this.updateTemp();
     }
+    // Updates fireplace if available
+
   }, {
     key: 'updateTemp',
     value: function updateTemp() {
@@ -374,14 +385,29 @@ module.exports = Room;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+'use strict';
 
 var House = __webpack_require__(0);
 
 // let root = "http://localhost:3000";
-// let root = "https://github.com/thesoorae/automated-home";
-// let root = process.env.PORT || 3000;
 var root = "https://automated-home.herokuapp.com";
+
+// set function for inner classes to update json database
+
+var updateDB = function updateDB(id, data) {
+  $.ajax({
+    type: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    url: root + '/rooms/' + id,
+    dataType: 'json',
+    data: JSON.stringify(data)
+  }).then(function (res) {
+    console.log('successfully updated' + res);
+  });
+};
+
 //get canvas
 $(document).ready(function () {
   var canvas = $("#canvas")[0];
@@ -389,24 +415,12 @@ $(document).ready(function () {
   var y = window.innerHeight || document.documentElement.clientHeight;
   canvas.width = x;
   canvas.height = y;
-  console.log(root);
-
-  var updateDB = function updateDB(id, data) {
-    $.ajax({
-      type: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      url: root + '/rooms/' + id,
-      dataType: 'json',
-      data: JSON.stringify(data)
-    }).then(function (res) {
-      console.log('successfully updated' + res);
-    });
-  };
 
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
+
+    // Fetch data from API and pass into House constructor to specify starting parameters
+
     $.ajax({
       url: root + '/rooms',
       method: 'GET'
@@ -414,8 +428,6 @@ $(document).ready(function () {
       var house = new House(ctx, data, updateDB);
       house.start();
     });
-
-    // Fetch data from API and pass into House constructor to specify starting parameters
   } else {
     throw Error("HTML5 Canvas not supported on your browser");
   }
