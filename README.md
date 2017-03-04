@@ -4,7 +4,7 @@
 [Live Demo](http://automated-home.herokuapp.com)
 ##Running on local server
 `npm-install`
-`node-server`
+`json-server db.json`
 `localhost:3000`
 uncomment `main.js:3` and comment `main.js:4` and then run `webpack` to change path.
 Or uncomment `bundle.js:392` and comment `bundle.js:393`.
