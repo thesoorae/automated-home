@@ -11,8 +11,9 @@ $(document).ready(function(){
   const y = window.innerHeight || document.documentElement.clientHeight;
   canvas.width = x;
   canvas.height = y;
+  console.log(root);
+
   const updateDB = function(id, data){
-    console.log(root);
     $.ajax({
       type: 'PATCH',
       headers:{
