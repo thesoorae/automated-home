@@ -1,25 +1,25 @@
 class Room{
-  constructor(name, ctx, temp, light, curtain, curtainDims, roomDims){
-    this.name = name;
+  constructor(ctx, params){
+    this.name = params.name;
     this.ctx = ctx;
-    this.temp = temp;
-    this.light = 10/light;
-    this.curtainHeight = curtainDims.max * (curtain/100);
+    this.temp = params.temp;
+    this.light = 10/(params.light);
+    this.curtainHeight = params.curtains.max * (params.curtains.current_height/100);
     this.draw = this.draw.bind(this);
     this.updateTemp = this.updateTemp.bind(this);
     this.update = this.update.bind(this);
 
-    this.curtainX = curtainDims.x;
-    this.curtainY = curtainDims.y;
-    this.curtainW = curtainDims.w;
-    this.curtainMaxHeight = curtainDims.max;
-    this.curtainColor = curtainDims.col;
+    this.curtainX = params.curtains.x;
+    this.curtainY = params.curtains.y;
+    this.curtainW = params.curtains.w;
+    this.curtainMaxHeight = params.curtains.max;
+    this.curtainColor = params.curtains.col;
 
-    this.roomX = roomDims.x;
-    this.roomY = roomDims.y;
-    this.roomW = roomDims.w;
-    this.roomH = roomDims.h;
-    if(name == "living"){
+    this.roomX = params.dims.x;
+    this.roomY = params.dims.y;
+    this.roomW = params.dims.w;
+    this.roomH = params.dims.h;
+    if(params.name == "living"){
     $('.fire').fire({
     speed:50,
     maxPow: (this.temp-60)/5,

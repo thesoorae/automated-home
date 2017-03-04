@@ -16,7 +16,7 @@ background-color: #cdedf8;
 
 width: 100vw;
 height: 100vh;
-
+position: relative;
 overflow: hidden;
 
 }
@@ -164,4 +164,10 @@ text-transform: uppercase;
 }
 .curtains .ui-slider-handle{
   background: #2bccc7;
+}
+.footer{
+  position: absolute;
+  bottom: 10px;
+  right: 50px;
+  font-size: 10px;
 }

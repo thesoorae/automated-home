@@ -1,13 +1,25 @@
 
 
 module.exports = {
-  entry: "./main.js",
+  entry: "./public/main.js",
   output: {
-  	filename: "./js/bundle.js"
+
+  	filename: "./public/js/bundle.js"
   },
 
  devtool: 'source-maps',
  resolve: {
    extensions: ["", ".js", ".jsx" ]
- }
+ },
+ module: {
+         loaders: [
+             {
+                 test: /\.js$/,
+                 loader: 'babel-loader',
+                 query: {
+                     presets: ['es2015']
+                 }
+             }
+         ]
+     }
 };

@@ -1,0 +1,30 @@
+{
+  "name": "adobe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
+    "start": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thesoorae/automated-home.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thesoorae/automated-home/issues"
+  },
+  "homepage": "https://github.com/thesoorae/automated-home#readme",
+  "dependencies": {
+    "jasmine": "^2.5.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "jasmine": "^2.5.3",
+    "jasmine-core": "^2.5.2",
+    "webpack": "^2.1.0-beta.22"
+  }
+}

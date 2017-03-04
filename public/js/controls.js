@@ -1,34 +1,39 @@
 const Room = require('./room');
 class Controls{
-  constructor(name, ctx, curtainDims, roomDims){
-    this.name = name;
+  constructor(ctx, params, updateDB){
+    this.id = params.id;
+    this.roomParams = params;
+    this.name = params.name;
     this.ctx = ctx;
-    this.light = 90;
-    this.temp = 70;
-    this.curtain = 20;
+    this.light = params.light;
+    this.temp = params.temp;
+    this.curtain = params.curtains.current_height;
     this.room = null;
-    this.curtainDims = curtainDims;
-    this.curtainPresent = curtainDims.present;
-    this.roomDims = roomDims;
+    this.curtainPresent = params.curtains.present;
+    this.roomDims = params.dims;
     this.update = this.update.bind(this);
     this.updateLight = this.updateLight.bind(this);
     this.updateCurtain = this.updateCurtain.bind(this);
     this.updateTemp = this.updateTemp.bind(this);
     this.lightText = this.lightText.bind(this);
-
+    this.updateDB = updateDB;
 
   }
   start(){
     this.loadControls();
 
-    this.room = new Room(this.name, this.ctx, this.temp, this.light, this.curtain, this.curtainDims, this.roomDims);
+    this.room = new Room(this.ctx, this.roomParams);
     this.room.draw();
   }
 
   update(){
-    console.log("in here");
     this.room.update(this.temp, this.light, this.curtain);
-    console.log(this.room);
+    let data = {
+      'light': this.light,
+      'curtains':{'current_height': this.curtain},
+      'temp': this.temp
+    };
+    this.updateDB(this.id, data);
   }
   updateLight(light){
     this.light = light;
