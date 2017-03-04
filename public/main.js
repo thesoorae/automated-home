@@ -2,8 +2,8 @@ const House = require('./js/house');
 
 // let root = "http://localhost:3000";
 // let root = "https://github.com/thesoorae/automated-home";
-let root = process.env.PORT || 3000;
-
+// let root = process.env.PORT || 3000;
+let root = "https://automated-home.herokuapp.com/";
 //get canvas
 $(document).ready(function(){
   const canvas = $("#canvas")[0];
