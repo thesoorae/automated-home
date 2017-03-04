@@ -1,6 +1,7 @@
 const Room = require('./room');
 class Controls{
-  constructor(ctx){
+  constructor(name, ctx){
+    this.name = name;
     this.ctx = ctx;
     this.light = 10;
     this.temp = 70;
@@ -15,7 +16,7 @@ class Controls{
   }
   start(){
     this.loadControls();
-    this.room = new Room(this.ctx, this.temp, this.light, this.curtain);
+    this.room = new Room(this.name, this.ctx, this.temp, this.light, this.curtain);
     this.room.draw();
   }
 
@@ -44,32 +45,33 @@ class Controls{
     const updateLight = this.updateLight;
     const updateCurtain = this.updateCurtain;
     const updateTemp = this.updateTemp;
+    const name = this.name;
 
-    $( "#minval-temp" ).text( this.temp );
-    $( "#minval-light" ).text( this.light );
-    $( "#minval-curtain" ).text( this.curtain );
+    $( `#${name}-minval-temp` ).text( this.temp );
+    $( `#${name}-minval-light` ).text( this.light );
+    $( `#${name}-minval-curtain` ).text( this.curtain );
 
 
-    $( "#temp-slider" ).slider({
+    $( `#${name}-temp-slider` ).slider({
               orientation:"horizontal",
               min: 50,
               max: 90,
               value:this.temp,
               slide: function( event, ui ) {
-                 $( "#minval-temp" ).text( ui.value ),
+                 $( `#${name}-minval-temp` ).text( ui.value ),
                  updateTemp(ui.value);
               }
            });
           //  $( "#minval-temp" ).val( $( "#temp-slider" ).slider( "value" ) );
 
 
-        $( "#light-slider" ).slider({
+        $( `#${name}-light-slider` ).slider({
                   orientation:"horizontal",
                   min: 1,
                   max: 10,
                   value:this.light,
                   slide: function( event, ui ) {
-                     $( "#minval-light" ).text( ui.value );
+                     $( `#${name}-minval-light` ).text( ui.value );
                      updateLight(ui.value);
 
                   },
@@ -77,19 +79,19 @@ class Controls{
                });
 
 
-            $( "#curtain-slider" ).slider({
+            $( `#${name}-curtain-slider` ).slider({
                       orientation:"horizontal",
                       min: 1,
                       max: 10,
                       value:this.curtain,
                       slide: function( event, ui ) {
-                         $( "#minval-curtain" ).text( ui.value );
+                         $( `#${name}-minval-curtain` ).text( ui.value );
                          updateCurtain(ui.value);
                       },
 
                    });
 
-                   $('.logs').button();
+
                 }
 
   }

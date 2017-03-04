@@ -12,12 +12,12 @@ div.container{
 
 div.controls{
 
-  height: 450px;
+  height: 80%;
   width:30%;
   /*max-width: 270px;*/
   padding: 70px 40px 10px 40px;
   border-radius: 20px;
-  margin: auto;
+  margin: 50px auto;
 
 
 
@@ -64,6 +64,7 @@ min-width: 100px;
   width: 600;
   height: 600;
   position: relative;
+  margin: auto;
 }
 .canvas{
   position: absolute;
@@ -95,4 +96,9 @@ min-width: 100px;
 
 .controls h2{
   font-size: 20px;
+}
+div.room-images{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }

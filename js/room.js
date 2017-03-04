@@ -1,5 +1,6 @@
 class Room{
-  constructor(ctx, temp, light, curtain){
+  constructor(name, ctx, temp, light, curtain){
+    this.name = name;
     this.ctx = ctx;
     this.temp = (temp - 50)/5;
     this.light = 0;
@@ -34,7 +35,7 @@ class Room{
 
 
     };
-    img.src = './assets/room.png';
+    img.src = `./assets/${this.name}.png`;
 
     }
   update(temp, light, curtain){

@@ -2,7 +2,7 @@ const Controls = require('./js/controls');
 
 //get canvas
 $(document).ready(function(){
-  const canvas = $("#canvas")[0];
+  const canvas = $("#living-canvas")[0];
   canvas.width = 600;
   canvas.height = 600;
 
@@ -12,7 +12,7 @@ $(document).ready(function(){
     const ctx = canvas.getContext('2d');
     // let w = $("#canvas").width();
     // let h = $("#canvas").height();
-    let controls = new Controls(ctx);
+    let controls = new Controls('living',ctx);
     controls.start();
 
 

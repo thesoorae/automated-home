@@ -16,10 +16,18 @@
   </head>
   <body>
     <div class="container">
+      <div class="room-images">
       <div class="frame">
-        <canvas id="canvas"></canvas>
+        <canvas id="living-canvas"></canvas>
         <div class="fire"></div>
       </div>
+      <div class="frame">
+        <canvas id="bedroom-canvas"></canvas>
+      </div>
+      <div class="frame">
+        <canvas id="kitchen-canvas"></canvas>
+      </div>
+    </div>
 
 
 
@@ -30,26 +38,78 @@
           <h2>Living Room</h2>
           <div class="sliders">
         <div class="slider temperature">
-          <div  class="slider-label" for = "minval-temp">Temperature</div>
-          <div id = "temp-slider"></div>
-          <div class="slider-output"  id = "minval-temp"></div>
+          <div  class="slider-label" for = "living-minval-temp">Temperature</div>
+          <div id = "living-temp-slider"></div>
+          <div class="slider-output"  id = "living-minval-temp"></div>
         </div>
 
         <div class="slider lights">
-          <div  class="slider-label" for = "minval-light">Light Dimmer</div>
-          <div id = "light-slider"></div>
+          <div  class="slider-label" for = "living-minval-light">Light Dimmer</div>
+          <div id = "living-light-slider"></div>
 
-          <div class="slider-output"  id = "minval-light"></div>
+          <div class="slider-output"  id = "living-minval-light"></div>
         </div>
 
         <div class="slider temperature">
-          <div  class="slider-label" for = "minval-curtain">Curtains</div>
-          <div id = "curtain-slider"></div>
+          <div  class="slider-label" for = "living-minval-curtain">Curtains</div>
+          <div id = "living-curtain-slider"></div>
 
-          <div class="slider-output"  id = "minval-curtain"></div>
+          <div class="slider-output"  id = "living-minval-curtain"></div>
         </div>
       </div>
     </div>
+
+    <div class="room">
+      <h2>Bedroom</h2>
+      <div class="sliders">
+    <div class="slider temperature">
+      <div  class="slider-label" for = "bedroom-minval-temp">Temperature</div>
+      <div id = "bedroom-temp-slider"></div>
+      <div class="slider-output"  id = "bedroom-minval-temp"></div>
+    </div>
+
+    <div class="slider lights">
+      <div  class="slider-label" for = "bedroom-minval-light">Light Dimmer</div>
+      <div id = "bedroom-light-slider"></div>
+
+      <div class="slider-output"  id = "bedroom-minval-light"></div>
+    </div>
+
+    <div class="slider temperature">
+      <div  class="slider-label" for = "bedroom-minval-curtain">Curtains</div>
+      <div id = "bedroom-curtain-slider"></div>
+
+      <div class="slider-output"  id = "bedroom-minval-curtain"></div>
+    </div>
+  </div>
+</div>
+
+<div class="room">
+  <h2>Kitchen</h2>
+  <div class="sliders">
+<div class="slider temperature">
+  <div  class="slider-label" for = "kitchen-minval-temp">Temperature</div>
+  <div id = "kitchen-temp-slider"></div>
+  <div class="slider-output"  id = "kitchen-minval-temp"></div>
+</div>
+
+<div class="slider lights">
+  <div  class="slider-label" for = "kitchen-minval-light">Light Dimmer</div>
+  <div id = "kitchen-light-slider"></div>
+
+  <div class="slider-output"  id = "kitchen-minval-light"></div>
+</div>
+
+<div class="slider temperature">
+  <div  class="slider-label" for = "kitchen-minval-curtain">Curtains</div>
+  <div id = "kitchen-curtain-slider"></div>
+
+  <div class="slider-output"  id = "kitchen-minval-curtain"></div>
+</div>
+</div>
+</div>
+
+
     <!-- <div class="button-bar">
       <div class="logs">Home Status</div><div class="rooms">Change Rooms</div>
     </div> -->

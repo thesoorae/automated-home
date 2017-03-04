@@ -44,11 +44,11 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	const Controls = __webpack_require__(2);
+	const Controls = __webpack_require__(1);
 	
 	//get canvas
 	$(document).ready(function(){
-	  const canvas = $("#canvas")[0];
+	  const canvas = $("#living-canvas")[0];
 	  canvas.width = 600;
 	  canvas.height = 600;
 	
@@ -58,7 +58,7 @@
 	    const ctx = canvas.getContext('2d');
 	    // let w = $("#canvas").width();
 	    // let h = $("#canvas").height();
-	    let controls = new Controls(ctx);
+	    let controls = new Controls('living',ctx);
 	    controls.start();
 	
 	
@@ -71,10 +71,116 @@
 
 /***/ },
 /* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	const Room = __webpack_require__(2);
+	class Controls{
+	  constructor(name, ctx){
+	    this.name = name;
+	    this.ctx = ctx;
+	    this.light = 10;
+	    this.temp = 70;
+	    this.curtain = 8;
+	    this.room = null;
+	    this.update = this.update.bind(this);
+	    this.updateLight = this.updateLight.bind(this);
+	    this.updateCurtain = this.updateCurtain.bind(this);
+	    this.updateTemp = this.updateTemp.bind(this);
+	
+	
+	  }
+	  start(){
+	    this.loadControls();
+	    this.room = new Room(this.name, this.ctx, this.temp, this.light, this.curtain);
+	    this.room.draw();
+	  }
+	
+	  update(){
+	    console.log("in here");
+	    this.room.update(this.temp, this.light, this.curtain);
+	    console.log(this.room);
+	  }
+	  updateLight(light){
+	    this.light = light;
+	    console.log("updateLight", this.light);
+	    this.update();
+	  }
+	
+	  updateCurtain(curtain){
+	    this.curtain = curtain;
+	    this.update();
+	  }
+	  updateTemp(temp){
+	    this.temp = temp;
+	    this.update();
+	  }
+	
+	  loadControls(){
+	    const update = this.update;
+	    const updateLight = this.updateLight;
+	    const updateCurtain = this.updateCurtain;
+	    const updateTemp = this.updateTemp;
+	    const name = this.name;
+	
+	    $( `#${name}-minval-temp` ).text( this.temp );
+	    $( `#${name}-minval-light` ).text( this.light );
+	    $( `#${name}-minval-curtain` ).text( this.curtain );
+	
+	
+	    $( `#${name}-temp-slider` ).slider({
+	              orientation:"horizontal",
+	              min: 50,
+	              max: 90,
+	              value:this.temp,
+	              slide: function( event, ui ) {
+	                 $( `#${name}-minval-temp` ).text( ui.value ),
+	                 updateTemp(ui.value);
+	              }
+	           });
+	          //  $( "#minval-temp" ).val( $( "#temp-slider" ).slider( "value" ) );
+	
+	
+	        $( `#${name}-light-slider` ).slider({
+	                  orientation:"horizontal",
+	                  min: 1,
+	                  max: 10,
+	                  value:this.light,
+	                  slide: function( event, ui ) {
+	                     $( `#${name}-minval-light` ).text( ui.value );
+	                     updateLight(ui.value);
+	
+	                  },
+	
+	               });
+	
+	
+	            $( `#${name}-curtain-slider` ).slider({
+	                      orientation:"horizontal",
+	                      min: 1,
+	                      max: 10,
+	                      value:this.curtain,
+	                      slide: function( event, ui ) {
+	                         $( `#${name}-minval-curtain` ).text( ui.value );
+	                         updateCurtain(ui.value);
+	                      },
+	
+	                   });
+	
+	
+	                }
+	
+	  }
+	
+	module.exports = Controls;
+
+
+/***/ },
+/* 2 */
 /***/ function(module, exports) {
 
 	class Room{
-	  constructor(ctx, temp, light, curtain){
+	  constructor(name, ctx, temp, light, curtain){
+	    this.name = name;
 	    this.ctx = ctx;
 	    this.temp = (temp - 50)/5;
 	    this.light = 0;
@@ -109,7 +215,7 @@
 	
 	
 	    };
-	    img.src = './assets/room.png';
+	    img.src = `./assets/${this.name}.png`;
 	
 	    }
 	  update(temp, light, curtain){
@@ -129,109 +235,6 @@
 	}
 	
 	module.exports = Room;
-
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	const Room = __webpack_require__(1);
-	class Controls{
-	  constructor(ctx){
-	    this.ctx = ctx;
-	    this.light = 10;
-	    this.temp = 70;
-	    this.curtain = 8;
-	    this.room = null;
-	    this.update = this.update.bind(this);
-	    this.updateLight = this.updateLight.bind(this);
-	    this.updateCurtain = this.updateCurtain.bind(this);
-	    this.updateTemp = this.updateTemp.bind(this);
-	
-	
-	  }
-	  start(){
-	    this.loadControls();
-	    this.room = new Room(this.ctx, this.temp, this.light, this.curtain);
-	    this.room.draw();
-	  }
-	
-	  update(){
-	    console.log("in here");
-	    this.room.update(this.temp, this.light, this.curtain);
-	    console.log(this.room);
-	  }
-	  updateLight(light){
-	    this.light = light;
-	    console.log("updateLight", this.light);
-	    this.update();
-	  }
-	
-	  updateCurtain(curtain){
-	    this.curtain = curtain;
-	    this.update();
-	  }
-	  updateTemp(temp){
-	    this.temp = temp;
-	    this.update();
-	  }
-	
-	  loadControls(){
-	    const update = this.update;
-	    const updateLight = this.updateLight;
-	    const updateCurtain = this.updateCurtain;
-	    const updateTemp = this.updateTemp;
-	
-	    $( "#minval-temp" ).text( this.temp );
-	    $( "#minval-light" ).text( this.light );
-	    $( "#minval-curtain" ).text( this.curtain );
-	
-	
-	    $( "#temp-slider" ).slider({
-	              orientation:"horizontal",
-	              min: 50,
-	              max: 90,
-	              value:this.temp,
-	              slide: function( event, ui ) {
-	                 $( "#minval-temp" ).text( ui.value ),
-	                 updateTemp(ui.value);
-	              }
-	           });
-	          //  $( "#minval-temp" ).val( $( "#temp-slider" ).slider( "value" ) );
-	
-	
-	        $( "#light-slider" ).slider({
-	                  orientation:"horizontal",
-	                  min: 1,
-	                  max: 10,
-	                  value:this.light,
-	                  slide: function( event, ui ) {
-	                     $( "#minval-light" ).text( ui.value );
-	                     updateLight(ui.value);
-	
-	                  },
-	
-	               });
-	
-	
-	            $( "#curtain-slider" ).slider({
-	                      orientation:"horizontal",
-	                      min: 1,
-	                      max: 10,
-	                      value:this.curtain,
-	                      slide: function( event, ui ) {
-	                         $( "#minval-curtain" ).text( ui.value );
-	                         updateCurtain(ui.value);
-	                      },
-	
-	                   });
-	
-	                   $('.logs').button();
-	                }
-	
-	  }
-	
-	module.exports = Controls;
 
 
 /***/ }
