@@ -1,6 +1,6 @@
 const House = require('./js/house');
-let root = "http://localhost:3000";
-
+// let root = "http://localhost:3000";
+let root = "https://github.com/thesoorae/automated-home.git";
 //get canvas
 $(document).ready(function(){
   const canvas = $("#canvas")[0];
