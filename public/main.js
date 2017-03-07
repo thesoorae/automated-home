@@ -1,7 +1,7 @@
 const House = require('./js/house');
 
-// let root = "http://localhost:3000";
-let root = "https://automated-home.herokuapp.com";
+let root = "http://localhost:3000";
+// let root = "https://automated-home.herokuapp.com";
 
 // set function for inner classes to update json database
 
