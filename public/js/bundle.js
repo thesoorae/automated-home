@@ -90,7 +90,7 @@ var House = function () {
     key: 'start',
     value: function start() {
       var data = this.data;
-      // Iterate through data and create Control objects for each room in database 
+      // Iterate through data and create Control objects for each room in database
       for (var i = 0; i < data.length; i++) {
         var roomParams = data[i];
         var newRoom = new Controls(this.ctx, roomParams, this.updateDB);
@@ -389,8 +389,8 @@ module.exports = Room;
 
 var House = __webpack_require__(0);
 
-// let root = "http://localhost:3000";
-var root = "https://automated-home.herokuapp.com";
+var root = "http://localhost:3000";
+// let root = "https://automated-home.herokuapp.com";
 
 // set function for inner classes to update json database
 

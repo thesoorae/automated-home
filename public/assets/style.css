@@ -3,29 +3,29 @@ html, body, div, p, a, h1, h2, h3{
   border: 0;
   margin: 0;
   padding: 0;
-  font-family: 'Gill Sans', sans-serif;
+  font-family: 'Helvetica', sans-serif;
   color: gray;
 }
 div.container{
-  background-image: url("./house.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: left center;
-  background-size: 1000px 800px;
+
   background-color: #cdedf8;
-  width: 100vw;
-  height: 100vh;
-  position: relative;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
 div.controls{
+  z-index: 200;
   position: absolute;
   top: 10vh;
   right: 30px;
   width:300px;
   padding: 20px 20px;
-  border-radius: 20px;
+  border-radius: 5px;
+  background-color: rgba(0,0,0,0.75);
+}
+
+#old-controls{
   -webkit-box-shadow: inset -4px -5px 104px -11px rgba(71,71,71,0.53),28px 32px 104px -11px rgba(71,71,71,0.35);
   -moz-box-shadow: inset -4px -5px 104px -11px rgba(71,71,71,0.53),  28px 32px 104px -11px rgba(71,71,71,0.35);
   box-shadow: inset -4px -5px 104px -11px rgba(71,71,71,0.53),  28px 32px 104px -11px rgba(71,71,71,0.35);
@@ -34,6 +34,7 @@ div.controls{
   background: -webkit-linear-gradient(top, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f6f6', endColorstr='#f5f6f6',GradientType=0 ); /* IE6-9 */
+
 }
 .title{
   text-align: center;
@@ -42,17 +43,26 @@ div.controls{
   text-transform: uppercase;
   width: 90%;
   margin: 15px auto;
+  color: #F5F3EF		;
 }
 
 .controls h2{
   font-size: 14px;
   text-transform: uppercase;
+  opacity: 1;
+  color: #F5F3EF		;
+  margin-top: 5px;
 }
 
 div.room{
-  margin: 10px;
   padding: 5px 10px;
-  border-radius: 5px;
+  border: 1px lightgray;
+  border-style: dashed none none none;
+}
+.fa {
+  color: #F5F3EF		;
+}
+.other-room{
   background: #eeeeee; /* Old browsers */
   background: #ffffff; /* Old browsers */
   background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6-15 */
@@ -65,6 +75,7 @@ div.sliders{
   flex-direction: column;
   justify-content: center;
   margin: 5px 0px;
+
 }
 .slider{
   display: flex;
@@ -74,33 +85,41 @@ div.sliders{
   position: relative;
 }
 .slider-label {
-  min-width: 80px;
-  font-size: 12px;
-  text-transform: uppercase;
+  text-align: center;
+  width: 50px;
 }
 
 .slider-output{
   margin: 0 auto;
   font-size: 14px;
   font-weight: bold;
+  color: #F5F3EF	;
 }
 
-.frame{
-  width: 100%;
-  height: 100vh;
+div.frame{
+  width: 1000px;
+  height: 700px;
   position: relative;
 }
-.canvas{
+img{
+  position:absolute;
+  left: 0;
+  bottom:0;
+  width: 900px;
+  z-index: 1;
+}
+
+#canvas{
   position: absolute;
-  right: 0;
-  top: 0;
+  left: 0;
+  bottom: 0;
   z-index: 100;
 }
 
 .fire{
   position: absolute;
-  bottom: 40px;
-  left: 114px;
+  bottom: 95px;
+  left: 100px;
   width:45px;
   height:45px;
   z-index: 200;
@@ -108,7 +127,7 @@ div.sliders{
 }
 
 .slider-range {
-  width: 120px;
+  width: 150px;
   position: relative;
   margin: auto;
   border: 0;
@@ -160,7 +179,7 @@ div.sliders{
 }
 .footer{
   position: absolute;
-  bottom: 10px;
+  bottom: -40px;
   right: 50px;
   font-size: 10px;
 }

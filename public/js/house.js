@@ -9,7 +9,7 @@ class House{
   }
   start(){
     let data = this.data;
-  // Iterate through data and create Control objects for each room in database 
+  // Iterate through data and create Control objects for each room in database
     for(let i=0; i < data.length; i++){
       let roomParams = data[i];
       let newRoom = new Controls(this.ctx, roomParams, this.updateDB);
