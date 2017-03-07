@@ -59,15 +59,18 @@ The UI uses the jQuery UI Widget "Slider", modified by the Slim Slider css provi
 
 Sample jQuery syntax for slider element:
 
-  ```$( `#${name}-temp-slider` ).slider()
+  ```
+  $( '#${name}-temp-slider' ).slider()
   ```
 
 `Controls` function for grabbing values from the DOM and updating instance variables as well as the server:
-    ```updateTemp(ui.value)
+    ```
+    updateTemp(ui.value)
     ```
 
 Just for fun, I added a jQuery fire texturizer created by Ramon Saquette to help visualize temperature changes in the living room. However, this texture required a slightly lower version of jQuery, which is why the included version is not the most recent.
-```$('.fire').fire()
+```
+$('.fire').fire()
   $('.fire').fire('change',{maxPow:(this.temp-60)/5})
   draw()
   ```
