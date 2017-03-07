@@ -24,17 +24,6 @@ div.controls{
   background-color: rgba(0,0,0,0.75);
 }
 
-#old-controls{
-  -webkit-box-shadow: inset -4px -5px 104px -11px rgba(71,71,71,0.53),28px 32px 104px -11px rgba(71,71,71,0.35);
-  -moz-box-shadow: inset -4px -5px 104px -11px rgba(71,71,71,0.53),  28px 32px 104px -11px rgba(71,71,71,0.35);
-  box-shadow: inset -4px -5px 104px -11px rgba(71,71,71,0.53),  28px 32px 104px -11px rgba(71,71,71,0.35);
-  background: #f5f6f6; /* Old browsers */
-  background: -moz-linear-gradient(top, #f5f6f6 0%, #dbdce2 21%, #b8bac6 49%, #dddfe3 80%, #f5f6f6 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #f5f6f6 0%,#dbdce2 21%,#b8bac6 49%,#dddfe3 80%,#f5f6f6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f6f6', endColorstr='#f5f6f6',GradientType=0 ); /* IE6-9 */
-
-}
 .title{
   text-align: center;
   font-size: 20px;
@@ -61,14 +50,7 @@ div.room{
 .fa {
   color: #F5F3EF		;
 }
-.other-room{
-  background: #eeeeee; /* Old browsers */
-  background: #ffffff; /* Old browsers */
-  background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
-}
+
 div.sliders{
   display: flex;
   flex-direction: column;
