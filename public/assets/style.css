@@ -4,7 +4,6 @@ html, body, div, p, a, h1, h2, h3{
   margin: 0;
   padding: 0;
   font-family: 'Helvetica', sans-serif;
-  color: gray;
 }
 div.container{
 
@@ -178,8 +177,18 @@ img{
   background: #2bccc7;
 }
 .footer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
   position: absolute;
-  bottom: -40px;
+  bottom: -50px;
   right: 50px;
-  font-size: 10px;
+  font-size: 12px;
+  z-index: 300;
+  color: black;
+}
+
+a{
+  color: gray;
 }
