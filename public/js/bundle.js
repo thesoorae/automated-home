@@ -389,8 +389,8 @@ module.exports = Room;
 
 var House = __webpack_require__(0);
 
-var root = "http://localhost:3000";
-// let root = "https://automated-home.herokuapp.com";
+// let root = "http://localhost:3000";
+var root = "https://automated-home.herokuapp.com";
 
 // set function for inner classes to update json database
 
